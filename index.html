@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameLeague | Oficjalna Platforma RL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Rajdhani:wght@600;700&display=swap');
+
+        :root {
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --bg: #050810;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, .font-heading { font-family: 'Rajdhani', sans-serif; }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .rank-row {
+            transition: all 0.2s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .rank-row:hover {
+            background: rgba(59, 130, 246, 0.07);
+            padding-left: 10px;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, #1e293b 0%, #050810 70%);
+            z-index: -1;
+        }
+
+        .shimmer {
+            position: relative; overflow: hidden;
+        }
+        .shimmer::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: rotate(45deg);
+            animation: shimmer-effect 4s infinite;
+        }
+        @keyframes shimmer-effect {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        
+        .partner-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .partner-badge:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="custom-scrollbar">
+
+    <div class="glow-bg"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-[100] glass border-b border-white/5 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center font-black text-2xl italic shadow-2xl shadow-blue-500/40">GL</div>
+                <span class="text-3xl font-bold uppercase tracking-tighter font-heading italic">Game<span class="text-blue-500">League</span></span>
+            </div>
+            
+            <div class="hidden lg:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.25em] text-gray-400">
+                <a href="#tournaments" class="hover:text-blue-400 transition">Turnieje</a>
+                <a href="#ranking" class="hover:text-blue-400 transition">Ranking</a>
+                <a href="#wallet" class="text-green-400 hover:text-green-300 transition">Portfel</a>
+                <a href="#create" class="hover:text-blue-400 transition">Stwórz Turniej</a>
+                <a href="#rules" class="hover:text-blue-400 transition">Regulamin</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://skillhost.pl" target="_blank" class="hidden sm:flex partner-badge px-4 py-2 rounded-lg items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition">
+                    <i class="fas fa-server text-blue-500"></i> Partner: skillhost.pl
+                </a>
+                <button class="bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-xl font-black text-xs transition flex items-center gap-3 shadow-lg uppercase italic tracking-widest">
+                    <i class="fab fa-discord text-lg"></i> Zaloguj
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="pt-56 pb-32 px-6 text-center relative">
+        <div class="container mx-auto">
+            <div class="inline-block px-6 py-2 rounded-full glass border border-blue-500/20 text-blue-400 text-xs font-black uppercase tracking-widest mb-10">
+                Oficjalny Partner Infrastruktury: skillhost.pl
+            </div>
+            <h1 class="text-8xl md:text-[10rem] font-black mb-8 italic tracking-tighter uppercase leading-[0.85] text-white">
+                GRAJ O <span class="text-blue-600">KASĘ</span>
+            </h1>
+            <p class="text-gray-400 text-xl md:text-2xl max-w-3xl mx-auto mb-16 font-medium leading-relaxed italic">
+                Jedyna platforma, gdzie każda bramka przybliża Cię do wypłaty. Podpinasz konto, wybierasz turniej i zgarniasz pulę.
+            </p>
+            <div class="flex flex-wrap justify-center gap-8">
+                <a href="#tournaments" class="btn-gradient px-16 py-6 rounded-2xl font-black uppercase text-sm tracking-[0.3em] italic">Dołącz do gry</a>
+                <a href="#create" class="glass px-16 py-6 rounded-2xl font-black uppercase text-sm tracking-[0.3em] italic border border-white/10 hover:bg-white/5 transition">Zrób Turniej</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFEL -->
+    <section id="wallet" class="py-12 container mx-auto px-6">
+        <div class="glass p-12 rounded-[3.5rem] border-l-[12px] border-green-500 shadow-2xl shimmer relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-12 relative z-10">
+                <div>
+                    <h3 class="text-gray-500 font-black uppercase text-sm tracking-[0.3em] mb-4 italic">Dostępne środki</h3>
+                    <div class="text-7xl font-black text-white tracking-tighter">420.00 <span class="text-green-500 text-3xl uppercase italic">pln</span></div>
+                    <div class="flex gap-6 mt-4">
+                        <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Wypłacono: 1,200 PLN</span>
+                        <span class="text-[10px] text-blue-500 font-black uppercase tracking-widest">W grze: 50 PLN</span>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-6 w-full lg:w-auto">
+                    <button class="bg-green-600 hover:bg-green-500 px-12 py-5 rounded-2xl font-black transition text-sm uppercase tracking-widest italic shadow-xl shadow-green-900/20">Wpłać </button>
+                    <button class="glass px-12 py-5 rounded-2xl font-black transition text-sm border border-white/10 hover:bg-white/5 uppercase tracking-widest italic">Wypłać na BLIK</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TURNIEJE (NAPRAWIONE) -->
+    <section id="tournaments" class="py-24 container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+                <h2 class="text-6xl font-black uppercase italic tracking-tighter text-white">Aktywne <span class="text-blue-600">Turnieje</span></h2>
+                <p class="text-gray-500 font-bold uppercase tracking-[0.2em] text-xs mt-2 italic">Wybierz tryb i walcz o pulę nagród</p>
+            </div>
+        </div>
+
+        <div class="grid gap-6">
+            <!-- Turniej 1 -->
+            <div class="glass p-8 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-8 border-l-8 border-blue-600 rank-row">
+                <div class="flex items-center gap-8">
+                    <div class="w-24 h-24 bg-blue-600 rounded-3xl flex items-center justify-center text-4xl font-black italic shadow-2xl">2v2</div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-[10px] font-black rounded uppercase tracking-widest border border-green-500/20">Zapisy Trwają</span>
+                            <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-[10px] font-black rounded uppercase tracking-widest border border-blue-500/20">SkillHost Infrastructure</span>
+                        </div>
+                        <h4 class="text-3xl font-black uppercase tracking-tight italic">Major Spring Cup 2024</h4>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-widest italic mt-1">Nagroda: 400.00 PLN | Wpisowe: 20 PLN</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-10">
+                    <div class="text-center">
+                        <div class="text-2xl font-black tracking-tighter italic">14/16</div>
+                        <div class="text-[9px] text-gray-500 uppercase font-black tracking-widest">Zespołów</div>
+                    </div>
+                    <button class="btn-gradient px-12 py-5 rounded-2xl font-black text-xs tracking-[0.2em] uppercase italic shadow-lg">Zapisz się</button>
+                </div>
+            </div>
+
+            <!-- Turniej 2 -->
+            <div class="glass p-8 rounded-[2.5rem] flex flex-col lg:flex-row items-center justify-between gap-8 border-l-8 border-purple-600 rank-row">
+                <div class="flex items-center gap-8">
+                    <div class="w-24 h-24 bg-purple-600 rounded-3xl flex items-center justify-center text-4xl font-black italic shadow-2xl">1v1</div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-[10px] font-black rounded uppercase tracking-widest border border-orange-500/20">Ostatnie Miejsca</span>
+                        </div>
+                        <h4 class="text-3xl font-black uppercase tracking-tight italic">Solo Duel Elite</h4>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-widest italic mt-1">Nagroda: 150.00 PLN | Wpisowe: 10 PLN</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-10">
+                    <div class="text-center">
+                        <div class="text-2xl font-black tracking-tighter italic">31/32</div>
+                        <div class="text-[9px] text-gray-500 uppercase font-black tracking-widest">Graczy</div>
+                    </div>
+                    <button class="btn-gradient px-12 py-5 rounded-2xl font-black text-xs tracking-[0.2em] uppercase italic shadow-lg">Walcz solo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RANKING GRACZY -->
+    <section id="ranking" class="py-24 container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+                <h2 class="text-6xl font-black uppercase italic tracking-tighter text-white">Ranking <span class="text-blue-600">PRO</span></h2>
+                <p class="text-gray-500 font-bold uppercase tracking-[0.2em] text-xs mt-2 italic">Zestawienie najlepszych zawodników w tym miesiącu</p>
+            </div>
+            <div class="glass px-6 py-3 rounded-xl border border-blue-500/30 text-blue-400 font-black text-[10px] uppercase tracking-widest">
+                Twoja pozycja: #142 (Master)
+            </div>
+        </div>
+
+        <div class="glass rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+            <div class="grid grid-cols-6 p-8 bg-white/5 text-[11px] font-black uppercase tracking-[0.3em] text-gray-500 border-b border-white/5 italic">
+                <div class="col-span-1">Poz.</div>
+                <div class="col-span-2">Zawodnik</div>
+                <div class="col-span-1">ELO</div>
+                <div class="col-span-1 text-center">Winrate</div>
+                <div class="col-span-1 text-right">Zarobek</div>
+            </div>
+            
+            <!-- TOP 1 -->
+            <div class="grid grid-cols-6 p-8 items-center rank-row border-l-4 border-yellow-500 bg-yellow-500/5">
+                <div class="col-span-1 text-3xl font-black italic text-yellow-500">01</div>
+                <div class="col-span-2 flex items-center gap-6">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-orange-500/20">TR</div>
+                    <div>
+                        <span class="font-black uppercase tracking-tight text-white text-lg italic block leading-none">ToxRacer_99</span>
+                        <span class="text-[9px] text-yellow-500 font-black uppercase tracking-widest italic">Grand Master</span>
+                    </div>
+                </div>
+                <div class="col-span-1 font-bold text-blue-400 text-xl tracking-tighter">2,950</div>
+                <div class="col-span-1 text-center font-black text-green-500 italic">82%</div>
+                <div class="col-span-1 text-right font-black text-white italic tracking-tighter">4,250 PLN</div>
+            </div>
+
+            <!-- TOP 2 -->
+            <div class="grid grid-cols-6 p-8 items-center rank-row border-l-4 border-slate-300 bg-slate-300/5">
+                <div class="col-span-1 text-2xl font-black italic text-slate-300">02</div>
+                <div class="col-span-2 flex items-center gap-6">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center font-black text-white text-xl">VQ</div>
+                    <span class="font-black uppercase tracking-tight text-white text-lg italic">Vanquish_RL</span>
+                </div>
+                <div class="col-span-1 font-bold text-blue-400 text-xl tracking-tighter">2,810</div>
+                <div class="col-span-1 text-center font-black text-green-500 italic">76%</div>
+                <div class="col-span-1 text-right font-black text-white italic tracking-tighter">2,100 PLN</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KREATOR TURNIEJU -->
+    <section id="create" class="py-24 container mx-auto px-6">
+        <div class="glass p-16 rounded-[4rem] border border-blue-500/20 relative shadow-3xl">
+            <div class="flex flex-col lg:flex-row gap-20 items-start">
+                <div class="lg:w-1/3">
+                    <h2 class="text-6xl font-black uppercase mb-8 italic tracking-tight leading-[0.9] text-white">Stwórz<br><span class="text-blue-600">Event</span></h2>
+                    <p class="text-gray-400 font-bold italic mb-10 leading-relaxed uppercase text-sm tracking-widest">Zarabiaj jako organizator. Pobierasz wpisowe, a my wypłacamy Ci prowizję automatycznie.</p>
+                    
+                    <div class="bg-blue-600/10 p-8 rounded-3xl border border-blue-500/20">
+                        <h4 class="text-xs font-black uppercase text-blue-400 mb-4 italic tracking-[0.2em]">Koszty i Prowizje:</h4>
+                        <ul class="text-[11px] text-gray-300 space-y-4 font-black uppercase tracking-widest italic">
+                            <li class="flex justify-between"><span>Prowizja Admina:</span> <span class="text-blue-500">10%</span></li>
+                            <li class="flex justify-between"><span>Twój Zarobek:</span> <span class="text-green-500">90% PULI</span></li>
+                            <li class="flex justify-between"><span>Koszt Organizacji:</span> <span class="text-white">1x Wpisowe</span></li>
+                        </ul>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://skillhost.pl" target="_blank">
+                            <img src="https://skillhost.pl/assets/img/logo.png" alt="SkillHost Partner" class="opacity-50 hover:opacity-100 transition h-8 filter grayscale hover:grayscale-0">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:w-2/3 w-full grid md:grid-cols-2 gap-10">
+                    <div>
+                        <label class="block text-[11px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4 italic">Nazwa Turnieju</label>
+                        <input type="text" placeholder="Np. Bitwa o Championa #1" class="w-full bg-black/60 border-2 border-white/5 p-5 rounded-2xl focus:border-blue-500 outline-none text-sm transition font-black text-white italic">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4 italic">Tryb Rozgrywki</label>
+                        <select class="w-full bg-black/60 border-2 border-white/5 p-5 rounded-2xl outline-none text-sm font-black italic cursor-pointer uppercase text-white">
+                            <option>1 vs 1 (Solo)</option>
+                            <option>2 vs 2 (Doubles)</option>
+                            <option>3 vs 3 (Standard)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4 italic">Wpisowe (Min. 5.00 PLN)</label>
+                        <input type="number" value="5.00" class="w-full bg-black/60 border-2 border-white/5 p-5 rounded-2xl focus:border-blue-500 outline-none text-sm font-black text-white italic">
+                        <p class="text-[9px] text-blue-500 mt-4 font-black uppercase italic tracking-[0.2em]">System pobierze 5.00 PLN z Twojego portfela za start.</p>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4 italic">Limit Rangi (Anti-Smurf)</label>
+                        <select class="w-full bg-black/60 border-2 border-white/5 p-5 rounded-2xl outline-none text-sm font-black italic uppercase text-white">
+                            <option>Wszystkie Rangi</option>
+                            <option>Tylko Rookie (do 800 ELO)</option>
+                            <option>Contender & Elite (801-1600)</option>
+                            <option>Master & Legend (1601-2500)</option>
+                            <option>GOAT (2500+)</option>
+                        </select>
+                    </div>
+                    <button class="md:col-span-2 btn-gradient py-7 rounded-3xl font-black uppercase text-sm tracking-[0.5em] italic shadow-2xl">Opublikuj Turniej i Zapłać</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RANGI -->
+    <section id="ranks" class="py-24 bg-white/[0.01] border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-black text-center mb-20 uppercase italic tracking-tighter">System <span class="text-blue-600">Poziomów</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-slate-500">
+                    <div class="text-slate-500 text-3xl mb-4 font-black italic">R</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">Rookie</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">0 - 800 ELO</p>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-blue-500">
+                    <div class="text-blue-500 text-3xl mb-4 font-black italic">C</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">Contender</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">801 - 1200</p>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-purple-500">
+                    <div class="text-purple-500 text-3xl mb-4 font-black italic">E</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">Elite</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">1201 - 1600</p>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-yellow-500">
+                    <div class="text-yellow-500 text-3xl mb-4 font-black italic">M</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">Master</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">1601 - 2000</p>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-red-500">
+                    <div class="text-red-500 text-3xl mb-4 font-black italic">L</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">Legend</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">2001 - 2500</p>
+                </div>
+                <div class="glass p-8 rounded-3xl text-center border-t-4 border-white">
+                    <div class="text-white text-3xl mb-4 font-black italic">G</div>
+                    <h4 class="font-black text-xs uppercase tracking-widest">GOAT</h4>
+                    <p class="text-[9px] text-gray-500 font-bold mt-2 italic uppercase">2501+ ELO</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGULAMIN -->
+    <section id="rules" class="py-24 container mx-auto px-6">
+        <div class="glass p-16 rounded-[4rem] border border-white/5 shadow-2xl">
+            <h2 class="text-5xl font-black mb-16 uppercase italic tracking-tighter text-blue-600 text-center">Oficjalne <span class="text-white">Zasady</span></h2>
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="space-y-10">
+                    <div class="relative pl-8 border-l-2 border-blue-600">
+                        <h4 class="text-white font-black uppercase mb-4 tracking-[0.2em] italic">01. Podział Prowizji</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-bold uppercase tracking-widest italic">GameLeague pobiera stałe 10% od każdego wpisowego w turniejach prywatnych. Pozostałe 90% stanowi pulę nagród wypłacaną automatycznie zwycięzcom po zakończeniu drabinki.</p>
+                    </div>
+                    <div class="relative pl-8 border-l-2 border-blue-600">
+                        <h4 class="text-white font-black uppercase mb-4 tracking-[0.2em] italic">02. Koszt Organizacji</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-bold uppercase tracking-widest italic">Każdy organizator turnieju musi wnieść opłatę startową w wysokości jednego wpisowego. Środki te są bezzwrotne i pokrywają hosting meczów turniejowych obsługiwany przez skillhost.pl.</p>
+                    </div>
+                </div>
+                <div class="space-y-10">
+                    <div class="relative pl-8 border-l-2 border-blue-600">
+                        <h4 class="text-white font-black uppercase mb-4 tracking-[0.2em] italic">03. Wypłaty Środków</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-bold uppercase tracking-widest italic">Wypłaty realizowane są za pomocą systemu BLIK lub przelewu błyskawicznego. Minimalna kwota do wypłaty wynosi 50 PLN. Wypłaty są księgowane w ciągu 24h roboczych.</p>
+                    </div>
+                    <div class="relative pl-8 border-l-2 border-blue-600">
+                        <h4 class="text-white font-black uppercase mb-4 tracking-[0.2em] italic">04. Smurfowanie i Oszustwa</h4>
+                        <p class="text-gray-400 text-xs leading-relaxed font-bold uppercase tracking-widest italic">Używanie kont o zaniżonej randze (Smurf) skutkuje permanentną blokadą konta i konfiskatą wszystkich środków zgromadzonych w portfelu na rzecz funduszu nagród sezonowych.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-20 border-t border-white/5 text-center">
+        <div class="text-[11px] font-black text-gray-700 uppercase tracking-[0.8em] mb-6 italic">GameLeague Official Platform &copy; 2024</div>
+        <div class="flex justify-center items-center gap-10 mb-8">
+            <a href="https://skillhost.pl" target="_blank" class="text-gray-500 hover:text-white transition font-black text-[10px] uppercase tracking-widest italic">
+                Hosted on skillhost.pl
+            </a>
+        </div>
+        <div class="flex justify-center gap-10 text-gray-500 text-2xl">
+            <i class="fab fa-tiktok hover:text-white transition cursor-pointer"></i>
+            <i class="fab fa-instagram hover:text-pink-500 transition cursor-pointer"></i>
+            <i class="fab fa-discord hover:text-blue-500 transition cursor-pointer"></i>
+            <i class="fab fa-youtube hover:text-red-600 transition cursor-pointer"></i>
+        </div>
+    </footer>
+
+    <script>
+        // Płynne przewijanie do sekcji
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
